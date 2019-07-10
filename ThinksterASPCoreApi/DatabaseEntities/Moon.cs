@@ -1,4 +1,4 @@
-﻿namespace ThinksterASPCoreApi.DatabaseModels
+﻿namespace ThinksterASPCoreApi.DatabaseEntities
 {
     public class Moon
     {

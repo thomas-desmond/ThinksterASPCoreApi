@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ThinksterASPCoreApi.DatabaseEntities;
+using ThinksterASPCoreApi.Repository;
 
 namespace ThinksterASPCoreApi
 {
@@ -26,7 +28,12 @@ namespace ThinksterASPCoreApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PlanetDatabaseContext>(opt => opt.UseInMemoryDatabase());
+            services.AddDbContext<SpaceDatabaseContext>(opt => opt.UseInMemoryDatabase("MyDatabase"));
+            services.AddScoped<ISpaceRepository, SpaceRepository>();
+
+            var serviceProvider = services.BuildServiceProvider();
+            var dbContext = serviceProvider.GetService<SpaceDatabaseContext>();
+            dbContext.Database.EnsureCreated();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -43,8 +50,21 @@ namespace ThinksterASPCoreApi
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private void AddTestData(SpaceDatabaseContext context)
+        {
+            var earth = new Planet
+            {
+                Id = "1",
+                Name = "Earth"
+            };
+            context.Planets.Add(earth);
+
+            context.SaveChanges();
         }
     }
 }
