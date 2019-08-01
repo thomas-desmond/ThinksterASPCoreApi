@@ -57,6 +57,52 @@ namespace ThinksterASPCoreApi
 
         private void AddTestData(SpaceDatabaseContext context)
         {
+            BuildPlanetData(context);
+            BuildStarData(context);
+
+            context.SaveChanges();
+        }
+
+        private void BuildStarData(SpaceDatabaseContext context)
+        {
+            var sun = new Star
+            {
+                Id = 1,
+                Name = "Sun",
+                AgeInMillions = 4603,
+            };
+
+            var sirius = new Star
+            {
+                Id = 2,
+                Name = "Sirius",
+                AgeInMillions = 300,
+            };
+
+            var betelgeuse = new Star
+            {
+                Id = 3,
+                Name = "Betelgeuse",
+                AgeInMillions = 10.01,
+            };
+
+            var rigel = new Star
+            {
+                Id = 4,
+                Name = "Rigel",
+                AgeInMillions = 8.005,
+            };
+
+            var pollux = new Star
+            {
+                Id = 5,
+                Name = "Pollux",
+                AgeInMillions = 724.5,
+            };
+        }
+
+        private static void BuildPlanetData(SpaceDatabaseContext context)
+        {
             var mercury = new Planet
             {
                 Id = 1,
@@ -91,8 +137,6 @@ namespace ThinksterASPCoreApi
             context.Planets.Add(mercury);
             context.Planets.Add(venus);
             context.Planets.Add(earth);
-
-            context.SaveChanges();
         }
     }
 }

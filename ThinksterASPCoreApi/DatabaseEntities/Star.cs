@@ -7,8 +7,8 @@ namespace ThinksterASPCoreApi.DatabaseEntities
 {
     public class Star
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public int AgeInMillions { get; set; }
+        public double AgeInMillions { get; set; }
     }
 }
