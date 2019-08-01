@@ -7,9 +7,9 @@ namespace ThinksterASPCoreApi.DatabaseEntities
 {
     public class Planet
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public double Mass { get; set; }
+        public string Mass { get; set; }
         public List<Moon> Moons { get; set; }
     }
 }
