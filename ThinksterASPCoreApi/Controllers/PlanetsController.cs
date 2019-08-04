@@ -1,16 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using ThinksterASPCoreApi.DatabaseEntities;
 using ThinksterASPCoreApi.Repository;
 
 namespace ThinksterASPCoreApi.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class PlanetsController : ControllerBase
     {
         private readonly ISpaceRepository _spaceRepository;
@@ -30,8 +29,10 @@ namespace ThinksterASPCoreApi.Controllers
             }
             catch (Exception)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Could not reach the database");
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                                    "Could not reach the database");
             }
+
         }
     }
 }

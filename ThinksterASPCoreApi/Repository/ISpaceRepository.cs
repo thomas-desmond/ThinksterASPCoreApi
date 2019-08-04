@@ -8,8 +8,17 @@ namespace ThinksterASPCoreApi.Repository
 {
     public interface ISpaceRepository
     {
-        Task<List<Planet>> GetAllPlanetsAsync();
-        Task<List<Star>> GetAllSunsAsync();
+        Task<bool> SaveChangesAsync();
 
+        Task<List<Planet>> GetAllPlanetsAsync(bool returnMoons = false);
+        Task<Planet> GetPlanetAsync(int id, bool returnMoons = false);
+        void AddPlanet(Planet planet);
+        void DeletePlanet(Planet planet);
+
+
+        Task<List<Star>> GetAllSunsAsync();
+        Task<Star> GetStarAsync(int id);
+        void AddStar(Star star);
+        void DeleteStar(Star star);
     }
 }

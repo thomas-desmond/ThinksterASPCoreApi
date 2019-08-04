@@ -108,7 +108,6 @@ namespace ThinksterASPCoreApi
                 Id = 1,
                 Name = "Mercury",
                 Mass = "3.285 × 10^23 kg",
-                Moons = new List<Moon>()
             };
 
             var venus = new Planet
@@ -116,7 +115,6 @@ namespace ThinksterASPCoreApi
                 Id = 1,
                 Name = "Venus",
                 Mass = "4.867 × 10^24 kg",
-                Moons = new List<Moon>()
             };
 
             var earth = new Planet
@@ -124,14 +122,6 @@ namespace ThinksterASPCoreApi
                 Id = 3,
                 Name = "Earth",
                 Mass = "5.972 × 10^24 kg",
-                Moons = new List<Moon>
-                {
-                    new Moon
-                    {
-                        Id = 1,
-                        Name = "Moon",
-                    }
-                }
             };
 
             context.Planets.Add(mercury);

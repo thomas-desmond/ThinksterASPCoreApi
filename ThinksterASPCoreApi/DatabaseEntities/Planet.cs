@@ -10,6 +10,5 @@ namespace ThinksterASPCoreApi.DatabaseEntities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Mass { get; set; }
-        public List<Moon> Moons { get; set; }
     }
 }

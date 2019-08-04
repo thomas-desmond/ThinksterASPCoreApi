@@ -26,7 +26,6 @@ namespace ThinksterASPCoreApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            List<Star> result = await _spaceRepository.GetAllSunsAsync();
             return null;
         }
     }
