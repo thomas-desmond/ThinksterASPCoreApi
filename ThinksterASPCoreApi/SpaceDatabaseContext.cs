@@ -13,6 +13,7 @@ namespace ThinksterASPCoreApi
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             var mercury = new Planet
             {
                 Id = 1,
@@ -34,16 +35,58 @@ namespace ThinksterASPCoreApi
                 Mass = "5.972 × 10^24 kg",
             };
 
+            var moon = new Moon
+            {
+                Id = 1,
+                PlanetId = 3,
+                Name = "Moon"
+            };
+            modelBuilder.Entity<Moon>().HasData(moon);
+
             modelBuilder.Entity<Planet>().HasData(mercury);
             modelBuilder.Entity<Planet>().HasData(venus);
             modelBuilder.Entity<Planet>().HasData(earth);
 
-
-            modelBuilder.Entity<Star>().HasData(new Star
+            var sun = new Star
             {
                 Id = 1,
                 Name = "Sun",
-            });
+                AgeInMillions = 4603,
+            };
+
+            var sirius = new Star
+            {
+                Id = 2,
+                Name = "Sirius",
+                AgeInMillions = 300,
+            };
+
+            var betelgeuse = new Star
+            {
+                Id = 3,
+                Name = "Betelgeuse",
+                AgeInMillions = 10.01,
+            };
+
+            var rigel = new Star
+            {
+                Id = 4,
+                Name = "Rigel",
+                AgeInMillions = 8.005,
+            };
+
+            var pollux = new Star
+            {
+                Id = 5,
+                Name = "Pollux",
+                AgeInMillions = 724.5,
+            };
+
+            modelBuilder.Entity<Star>().HasData(sun);
+            modelBuilder.Entity<Star>().HasData(sirius);
+            modelBuilder.Entity<Star>().HasData(betelgeuse);
+            modelBuilder.Entity<Star>().HasData(rigel);
+            modelBuilder.Entity<Star>().HasData(pollux);
         }
 
         public DbSet<Planet> Planets { get; set; }

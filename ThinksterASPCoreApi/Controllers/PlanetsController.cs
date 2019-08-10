@@ -32,7 +32,6 @@ namespace ThinksterASPCoreApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, 
                                     "Could not reach the database");
             }
-
         }
     }
 }

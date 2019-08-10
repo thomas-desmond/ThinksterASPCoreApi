@@ -26,7 +26,16 @@ namespace ThinksterASPCoreApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return null;
+            try
+            {
+                List<Star> result = await _spaceRepository.GetAllStarsAsync();
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                                    "Could not reach the database");
+            }
         }
     }
 }

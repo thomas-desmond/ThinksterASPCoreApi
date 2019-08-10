@@ -16,7 +16,7 @@ namespace ThinksterASPCoreApi.Repository
         void DeletePlanet(Planet planet);
 
 
-        Task<List<Star>> GetAllSunsAsync();
+        Task<List<Star>> GetAllStarsAsync();
         Task<Star> GetStarAsync(int id);
         void AddStar(Star star);
         void DeleteStar(Star star);

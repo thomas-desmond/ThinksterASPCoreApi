@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,24 +45,32 @@ namespace ThinksterASPCoreApi.Repository
 
         public Task<List<Planet>> GetAllPlanetsAsync(bool returnMoons = false)
         {
-            var query = _spaceDbContext.Planets;
-            return query.ToListAsync();
+            if (returnMoons)
+            {
+               return _spaceDbContext.Planets.Include(s => s.Moons).ToListAsync();
+            }
+            else
+            {
+                return _spaceDbContext.Planets.ToListAsync();
+            }
         }
 
-        public Task<List<Star>> GetAllSunsAsync()
+        public Task<List<Star>> GetAllStarsAsync()
         {
             var query = _spaceDbContext.Stars;
             return query.ToListAsync();
         }
 
-        public Task<Planet> GetPlanetAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<Planet> GetPlanetAsync(int id, bool returnMoons = false)
         {
-            throw new NotImplementedException();
+            var result = _spaceDbContext.Planets;
+
+            if (returnMoons)
+            {
+                result.Include(s => s.Moons);
+            }
+
+            return result.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public Task<Star> GetStarAsync(int id)
