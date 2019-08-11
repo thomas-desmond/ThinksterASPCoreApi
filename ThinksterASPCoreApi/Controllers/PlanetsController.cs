@@ -20,11 +20,11 @@ namespace ThinksterASPCoreApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(bool returnMoons = false)
         {
             try
             {
-                List<Planet> result = await _spaceRepository.GetAllPlanetsAsync();
+                List<Planet> result = await _spaceRepository.GetAllPlanetsAsync(returnMoons);
                 return Ok(result);
             }
             catch (Exception)
@@ -35,11 +35,11 @@ namespace ThinksterASPCoreApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int id, bool returnMoons = false)
         {
             try
             {
-                Planet result = await _spaceRepository.GetPlanetAsync(id);
+                Planet result = await _spaceRepository.GetPlanetAsync(id, returnMoons);
 
                 if (result == null)
                 {

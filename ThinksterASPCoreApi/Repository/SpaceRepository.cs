@@ -63,14 +63,16 @@ namespace ThinksterASPCoreApi.Repository
 
         public Task<Planet> GetPlanetAsync(int id, bool returnMoons = false)
         {
-            var result = _spaceDbContext.Planets;
 
             if (returnMoons)
             {
-                result.Include(s => s.Moons);
+                return _spaceDbContext.Planets.Include(s => s.Moons).FirstOrDefaultAsync(p => p.Id == id);
+            }
+            else
+            {
+                return _spaceDbContext.Planets.FirstOrDefaultAsync(p => p.Id == id);
             }
 
-            return result.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public Task<Star> GetStarAsync(int id)
