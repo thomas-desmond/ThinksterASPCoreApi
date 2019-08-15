@@ -19,7 +19,7 @@ namespace ThinksterASPCoreApi.Controllers
             _spaceRepository = spaceRepository;
         }
 
-        // The GET method below is currently returning null.
+        // Exercise 1: The GET method below is currently returning null.
         // Modify the GET method to return a HTTP 200 response
         // code if the request is succesful and a HTTP 500 error 
         // if the call is unsuccesful
@@ -34,6 +34,26 @@ namespace ThinksterASPCoreApi.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, 
+                                    "Could not reach the database");
+            }
+        }
+
+        // Exercise 2: The GET method below is currently returning null.
+        // Modify the GET to return a HTTP 404 response code
+        // if the given ID does not match anything in our database. Also
+        // allow the user to 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                Star result = null;
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                     "Could not reach the database");
             }
         }

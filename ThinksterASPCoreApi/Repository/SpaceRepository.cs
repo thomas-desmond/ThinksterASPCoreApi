@@ -55,10 +55,18 @@ namespace ThinksterASPCoreApi.Repository
             }
         }
 
-        public Task<List<Star>> GetAllStarsAsync()
+        public Task<List<Star>> GetAllStarsAsync(bool returnFact = false)
         {
-            var query = _spaceDbContext.Stars;
-            return query.ToListAsync();
+            if (returnFact)
+            {
+                var query = _spaceDbContext.Stars.Include(s => s.Fact);
+                return query.ToListAsync();
+            }
+            else
+            {
+                var query = _spaceDbContext.Stars;
+                return query.ToListAsync();
+            }
         }
 
         public Task<Planet> GetPlanetAsync(int id, bool returnMoons = false)
@@ -75,9 +83,16 @@ namespace ThinksterASPCoreApi.Repository
 
         }
 
-        public Task<Star> GetStarAsync(int id)
+        public Task<Star> GetStarAsync(int id, bool returnFact = false)
         {
-            throw new NotImplementedException();
+            if (returnFact)
+            {
+                return _spaceDbContext.Stars.Include(s => s.Fact).FirstOrDefaultAsync(s => s.Id == id);
+            }
+            else
+            {
+                return _spaceDbContext.Stars.FirstOrDefaultAsync(s => s.Id == id);
+            }
         }
 
         public Task<bool> SaveChangesAsync()

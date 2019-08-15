@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace ThinksterASPCoreApi.DatabaseEntities
 {
-    public class Star
+    public class StarFact
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public double AgeInMillions { get; set; }
-        public StarFact Fact { get; set; }
+        public int StarId { get; set; }
+        public string Fact { get; set; }
+        public string Source { get; set; }
     }
 }

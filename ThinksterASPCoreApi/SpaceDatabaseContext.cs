@@ -54,11 +54,27 @@ namespace ThinksterASPCoreApi
                 AgeInMillions = 4603,
             };
 
+            var sunFact = new StarFact
+            {
+                Id = 1,
+                StarId = 1,
+                Fact = "The Maunder Minimum was between 1645 and 1715 when the Sun went through a very inactive stage.",
+                Source = "thesolarexplorer.net",
+            };
+
             var sirius = new Star
             {
                 Id = 2,
                 Name = "Sirius",
                 AgeInMillions = 300,
+            };
+
+            var siriusFact = new StarFact
+            {
+                Id = 2,
+                StarId = 2,
+                Fact = "It had about five times the mass of the Sun.",
+                Source = "easyscienceforkids.com",
             };
 
             var betelgeuse = new Star
@@ -68,11 +84,27 @@ namespace ThinksterASPCoreApi
                 AgeInMillions = 10.01,
             };
 
+            var betelgeuseFact = new StarFact
+            {
+                Id = 3,
+                StarId = 3,
+                Fact = "There has been great debate over which spelling of his name is correct.",
+                Source = "stackexchange.com",
+            };
+
             var rigel = new Star
             {
                 Id = 4,
                 Name = "Rigel",
                 AgeInMillions = 8.005,
+            };
+
+            var rigelFact = new StarFact
+            {
+                Id = 4,
+                StarId = 4,
+                Fact = "Light from Rigel (left of center) is reflected of the ghostly Witch Head nebula.",
+                Source = "solarsystemquick.com",
             };
 
             var pollux = new Star
@@ -81,6 +113,22 @@ namespace ThinksterASPCoreApi
                 Name = "Pollux",
                 AgeInMillions = 724.5,
             };
+
+            var polluxFact = new StarFact
+            {
+                Id = 5,
+                StarId = 5,
+                Fact = "Pollux is a star that lies in the constellation Gemini.",
+                Source = "space.com",
+            };
+
+
+            modelBuilder.Entity<StarFact>().HasData(sunFact);
+            modelBuilder.Entity<StarFact>().HasData(siriusFact);
+            modelBuilder.Entity<StarFact>().HasData(betelgeuseFact);
+            modelBuilder.Entity<StarFact>().HasData(rigelFact);
+            modelBuilder.Entity<StarFact>().HasData(polluxFact);
+
 
             modelBuilder.Entity<Star>().HasData(sun);
             modelBuilder.Entity<Star>().HasData(sirius);
