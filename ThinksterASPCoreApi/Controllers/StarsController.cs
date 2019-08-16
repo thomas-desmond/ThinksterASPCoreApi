@@ -24,11 +24,11 @@ namespace ThinksterASPCoreApi.Controllers
         // code if the request is succesful and a HTTP 500 error 
         // if the call is unsuccesful
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(bool returnFact = false)
         {
             try
             {
-                List<Star> result = await _spaceRepository.GetAllStarsAsync();
+                List<Star> result = await _spaceRepository.GetAllStarsAsync(returnFact);
                 return Ok(result);
             }
             catch (Exception)
@@ -43,11 +43,16 @@ namespace ThinksterASPCoreApi.Controllers
         // if the given ID does not match anything in our database. Also
         // allow the user to 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int id, bool returnFact = false)
         {
             try
             {
-                Star result = null;
+                Star result = await _spaceRepository.GetStarAsync(id, returnFact);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
 
                 return Ok(result);
             }
