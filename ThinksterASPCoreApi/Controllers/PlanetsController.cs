@@ -14,12 +14,10 @@ namespace ThinksterASPCoreApi.Controllers
     public class PlanetsController : ControllerBase
     {
         private readonly ISpaceRepository _spaceRepository;
-        private readonly LinkGenerator _linkGenerator;
 
-        public PlanetsController(ISpaceRepository spaceRepository, LinkGenerator linkGenerator)
+        public PlanetsController(ISpaceRepository spaceRepository)
         {
             _spaceRepository = spaceRepository;
-            _linkGenerator = linkGenerator;
         }
 
         [HttpGet]
@@ -63,19 +61,17 @@ namespace ThinksterASPCoreApi.Controllers
         {
             try
             {
-                var location = _linkGenerator.GetPathByAction("Get", "Planets", new { id = planet.Id });
-
                 _spaceRepository.AddPlanet(planet);
                 bool result = await _spaceRepository.SaveChangesAsync();
                 if (result)
                 {
-                    return Created($"/api/planets/{location}", planet);
+                    return Created($"/api/planets/{planet.Id}", planet);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                    "Could not reach the database");
             }
 
             return BadRequest();
