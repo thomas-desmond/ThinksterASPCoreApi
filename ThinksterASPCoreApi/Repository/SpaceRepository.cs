@@ -11,16 +11,22 @@ namespace ThinksterASPCoreApi.Repository
     public class SpaceRepository : ISpaceRepository
     {
         private readonly SpaceDatabaseContext _spaceDbContext;
+        private bool databaseCreated = false;
 
         public SpaceRepository(SpaceDatabaseContext spaceDbContext)
         {
             _spaceDbContext = spaceDbContext;
-            _spaceDbContext.Database.EnsureCreated();
+            if(!databaseCreated)
+            {
+                _spaceDbContext.Database.EnsureCreated();
+                //AddTestData(_spaceDbContext);
+                databaseCreated = true;
+            }
         }
 
         public void AddPlanet(Planet planet)
         {
-            throw new NotImplementedException();
+            _spaceDbContext.Add(planet);
         }
 
         public void AddStar(Star star)
@@ -47,7 +53,7 @@ namespace ThinksterASPCoreApi.Repository
         {
             if (returnMoons)
             {
-               return _spaceDbContext.Planets.Include(s => s.Moons).ToListAsync();
+                return _spaceDbContext.Planets.Include(s => s.Moons).ToListAsync();
             }
             else
             {
@@ -95,9 +101,11 @@ namespace ThinksterASPCoreApi.Repository
             }
         }
 
-        public Task<bool> SaveChangesAsync()
+        public async Task<bool> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            var result =  await _spaceDbContext.SaveChangesAsync();
+            return result > 0;
         }
+
     }
 }

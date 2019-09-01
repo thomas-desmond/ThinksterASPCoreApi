@@ -18,6 +18,8 @@ namespace ThinksterASPCoreApi
 {
     public class Startup
     {
+        SpaceDatabaseContext _dbContext;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,9 +34,9 @@ namespace ThinksterASPCoreApi
             services.AddScoped<ISpaceRepository, SpaceRepository>();
 
             var serviceProvider = services.BuildServiceProvider();
-            var dbContext = serviceProvider.GetService<SpaceDatabaseContext>();
-            dbContext.Database.EnsureCreated();
-
+            _dbContext = serviceProvider.GetService<SpaceDatabaseContext>();
+            _dbContext.Database.EnsureCreated();
+            //AddTestData(dbContext);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -53,14 +55,27 @@ namespace ThinksterASPCoreApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            AddTestData(app);
         }
 
-        private void AddTestData(SpaceDatabaseContext context)
+        private async void AddTestData(IApplicationBuilder app)
         {
-            BuildPlanetData(context);
-            BuildStarData(context);
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<SpaceDatabaseContext>();
+                if (context.Planets.Count() <= 0)
+                {
+                    BuildPlanetData(context);
+                }
+                if (context.Stars.Count() <= 0)
+                {
+                    BuildStarData(context);
+                }
 
-            context.SaveChanges();
+                await context.SaveChangesAsync();
+            }
+
+
         }
 
         private void BuildStarData(SpaceDatabaseContext context)
@@ -105,23 +120,29 @@ namespace ThinksterASPCoreApi
         {
             var mercury = new Planet
             {
-                Id = 1,
                 Name = "Mercury",
                 Mass = "3.285 × 10^23 kg",
             };
 
             var venus = new Planet
             {
-                Id = 1,
                 Name = "Venus",
                 Mass = "4.867 × 10^24 kg",
             };
 
+
+            var moon = new Moon
+            {
+                Name = "Moon",
+            };
+
+            context.Moons.Add(moon);
+
             var earth = new Planet
             {
-                Id = 3,
                 Name = "Earth",
                 Mass = "5.972 × 10^24 kg",
+                Moons = new List<Moon> { moon }
             };
 
             context.Planets.Add(mercury);
@@ -129,4 +150,7 @@ namespace ThinksterASPCoreApi
             context.Planets.Add(earth);
         }
     }
+
+
+
 }

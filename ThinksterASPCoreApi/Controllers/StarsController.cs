@@ -41,7 +41,8 @@ namespace ThinksterASPCoreApi.Controllers
         // Exercise 2: The GET method below is currently returning null.
         // Modify the GET to return a HTTP 404 response code
         // if the given ID does not match anything in our database. Also
-        // allow the user to 
+        // allow the user to use the "returnFact" query string as part of 
+        // the URL request 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id, bool returnFact = false)
         {
