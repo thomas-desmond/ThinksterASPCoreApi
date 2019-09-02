@@ -11,17 +11,10 @@ namespace ThinksterASPCoreApi.Repository
     public class SpaceRepository : ISpaceRepository
     {
         private readonly SpaceDatabaseContext _spaceDbContext;
-        private bool databaseCreated = false;
 
         public SpaceRepository(SpaceDatabaseContext spaceDbContext)
         {
             _spaceDbContext = spaceDbContext;
-            if(!databaseCreated)
-            {
-                _spaceDbContext.Database.EnsureCreated();
-                //AddTestData(_spaceDbContext);
-                databaseCreated = true;
-            }
         }
 
         public void AddPlanet(Planet planet)
@@ -36,7 +29,7 @@ namespace ThinksterASPCoreApi.Repository
 
         public void DeletePlanet(Planet planet)
         {
-            throw new NotImplementedException();
+            _spaceDbContext.Remove(planet);
         }
 
         public void DeleteStar(Star star)

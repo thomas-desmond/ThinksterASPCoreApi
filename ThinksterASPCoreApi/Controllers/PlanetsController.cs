@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -65,7 +66,65 @@ namespace ThinksterASPCoreApi.Controllers
                 bool result = await _spaceRepository.SaveChangesAsync();
                 if (result)
                 {
-                    return Created($"/api/planets/{planet.Id}", planet);
+                    return Created($"api/planets/{planet.Id}", planet);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                    "Could not reach the database");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]Planet newPlanetData)
+        {
+            try
+            {
+                if (id != newPlanetData.Id)
+                {
+                    return BadRequest();
+                }
+
+                var existingPlanet = await _spaceRepository.GetPlanetAsync(id);
+                if (existingPlanet == null)
+                {
+                    return NotFound($"No planet exists with the id {id}");
+                }
+
+                existingPlanet.Mass = newPlanetData.Mass;
+                existingPlanet.Name = newPlanetData.Name;
+
+                await _spaceRepository.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                    "Could not reach the database");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var planetToDelete = await _spaceRepository.GetPlanetAsync(id);
+                if (planetToDelete == null)
+                {
+                    return NotFound($"No planet exists with the id {id}");
+                }
+
+                _spaceRepository.DeletePlanet(planetToDelete);
+
+                bool result = await _spaceRepository.SaveChangesAsync();
+                if (result)
+                {
+                    return Ok();
                 }
             }
             catch (Exception)
