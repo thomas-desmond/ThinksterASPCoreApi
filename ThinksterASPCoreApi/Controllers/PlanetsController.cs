@@ -62,6 +62,11 @@ namespace ThinksterASPCoreApi.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Model is missing data");
+                }
+
                 _spaceRepository.AddPlanet(planet);
                 bool result = await _spaceRepository.SaveChangesAsync();
                 if (result)
