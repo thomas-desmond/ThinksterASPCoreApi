@@ -62,11 +62,10 @@ namespace ThinksterASPCoreApi.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if(!ModelState.IsValid)
                 {
-                    return BadRequest("Model is missing data");
+                    return BadRequest("Model is missing required data");
                 }
-
                 _spaceRepository.AddPlanet(planet);
                 bool result = await _spaceRepository.SaveChangesAsync();
                 if (result)
@@ -83,6 +82,7 @@ namespace ThinksterASPCoreApi.Controllers
             return BadRequest();
         }
 
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]Planet newPlanetData)
         {
@@ -93,7 +93,7 @@ namespace ThinksterASPCoreApi.Controllers
                     return BadRequest();
                 }
 
-                var existingPlanet = await _spaceRepository.GetPlanetAsync(id);
+                var existingPlanet = await _spaceRepository.GetPlanetAsync(id, true);
                 if (existingPlanet == null)
                 {
                     return NotFound($"No planet exists with the id {id}");
@@ -101,6 +101,10 @@ namespace ThinksterASPCoreApi.Controllers
 
                 existingPlanet.Mass = newPlanetData.Mass;
                 existingPlanet.Name = newPlanetData.Name;
+                for (int i = 0; i < existingPlanet.Moons.Count; i++)
+                {
+                    existingPlanet.Moons[i].Name = newPlanetData.Moons[i].Name;
+                }
 
                 await _spaceRepository.SaveChangesAsync();
 
