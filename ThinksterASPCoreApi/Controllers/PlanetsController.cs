@@ -82,7 +82,6 @@ namespace ThinksterASPCoreApi.Controllers
             return BadRequest();
         }
 
-
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]Planet newPlanetData)
         {
@@ -90,13 +89,12 @@ namespace ThinksterASPCoreApi.Controllers
             {
                 if (id != newPlanetData.Id)
                 {
-                    return BadRequest();
+                    return BadRequest("Id's do not match");
                 }
-
                 var existingPlanet = await _spaceRepository.GetPlanetAsync(id, true);
                 if (existingPlanet == null)
                 {
-                    return NotFound($"No planet exists with the id {id}");
+                    return BadRequest($"Could not find planet with id {id}");
                 }
 
                 existingPlanet.Mass = newPlanetData.Mass;
@@ -110,12 +108,37 @@ namespace ThinksterASPCoreApi.Controllers
 
                 return NoContent();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                     "Could not reach the database");
             }
+
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

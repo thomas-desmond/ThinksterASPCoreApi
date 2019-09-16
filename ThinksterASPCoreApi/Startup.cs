@@ -80,40 +80,79 @@ namespace ThinksterASPCoreApi
 
         private void BuildStarData(SpaceDatabaseContext context)
         {
+
+            var sunFact = new StarFact
+            {
+                Fact = "The Maunder Minimum was between 1645 and 1715 when the Sun went through a very inactive stage.",
+                Source = "thesolarexplorer.net",
+            };
+
             var sun = new Star
             {
-                Id = 1,
                 Name = "Sun",
                 AgeInMillions = 4603,
+                Fact = sunFact,
+            };
+
+            var siriusFact = new StarFact
+            {
+                Fact = "It had about five times the mass of the Sun.",
+                Source = "easyscienceforkids.com",
             };
 
             var sirius = new Star
             {
-                Id = 2,
                 Name = "Sirius",
                 AgeInMillions = 300,
+                Fact = siriusFact,
+            };
+
+            var betelgeuseFact = new StarFact
+            {
+                Id = 3,
+                StarId = 3,
+                Fact = "There has been great debate over which spelling of his name is correct.",
+                Source = "stackexchange.com",
             };
 
             var betelgeuse = new Star
             {
-                Id = 3,
                 Name = "Betelgeuse",
                 AgeInMillions = 10.01,
+                Fact = betelgeuseFact,
+            };
+
+            var rigelFact = new StarFact
+            {
+                Fact = "Light from Rigel (left of center) is reflected of the ghostly Witch Head nebula.",
+                Source = "solarsystemquick.com",
             };
 
             var rigel = new Star
             {
-                Id = 4,
                 Name = "Rigel",
                 AgeInMillions = 8.005,
+                Fact = rigelFact,
+            };
+
+            var polluxFact = new StarFact
+            {
+                Fact = "Pollux is a star that lies in the constellation Gemini.",
+                Source = "space.com",
             };
 
             var pollux = new Star
             {
-                Id = 5,
                 Name = "Pollux",
                 AgeInMillions = 724.5,
+                Fact = polluxFact,
             };
+
+            context.Stars.Add(sun);
+            context.Stars.Add(sirius);
+            context.Stars.Add(betelgeuse);
+            context.Stars.Add(rigel);
+            context.Stars.Add(pollux);
         }
 
         private static void BuildPlanetData(SpaceDatabaseContext context)
