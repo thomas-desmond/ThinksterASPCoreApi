@@ -113,32 +113,7 @@ namespace ThinksterASPCoreApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                     "Could not reach the database");
             }
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

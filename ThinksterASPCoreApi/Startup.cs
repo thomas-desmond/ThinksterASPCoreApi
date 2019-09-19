@@ -109,8 +109,6 @@ namespace ThinksterASPCoreApi
 
             var betelgeuseFact = new StarFact
             {
-                Id = 3,
-                StarId = 3,
                 Fact = "There has been great debate over which spelling of his name is correct.",
                 Source = "stackexchange.com",
             };
@@ -189,7 +187,4 @@ namespace ThinksterASPCoreApi
             context.Planets.Add(earth);
         }
     }
-
-
-
 }
