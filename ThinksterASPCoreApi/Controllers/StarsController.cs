@@ -63,5 +63,63 @@ namespace ThinksterASPCoreApi.Controllers
                                     "Could not reach the database");
             }
         }
+
+        // Exercise 3: The POST & PUT methods below are currently implemented and working.
+        // But they contain no error handling. Improve the two methods so that bad and invalid 
+        // requests are handled properly and meaningful status codes are returned to the user.
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]Star star)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Star is missing required data");
+                }
+                _spaceRepository.AddStar(star);
+                bool result = await _spaceRepository.SaveChangesAsync();
+                if (result)
+                {
+                    return Created($"api/planets/{star.Id}", star);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                    "Could not reach the database");
+            }
+            return BadRequest();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]Star newStarData)
+        {
+            try
+            {
+                if (id != newStarData.Id)
+                {
+                    return BadRequest("Id of item to edit and passed in item must match");
+                }
+
+                var existingStar = await _spaceRepository.GetStarAsync(id, true);
+                if (existingStar == null)
+                {
+                    return BadRequest($"No Star exists with id {id}");
+                }
+
+                existingStar.AgeInMillions = newStarData.AgeInMillions;
+                existingStar.Name = newStarData.Name;
+                existingStar.Fact = newStarData.Fact;
+
+                await _spaceRepository.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Could not reach the database");
+            }
+        }
     }
 }

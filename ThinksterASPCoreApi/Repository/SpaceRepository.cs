@@ -24,7 +24,7 @@ namespace ThinksterASPCoreApi.Repository
 
         public void AddStar(Star star)
         {
-            throw new NotImplementedException();
+            _spaceDbContext.Add(star);
         }
 
         public void DeletePlanet(Planet planet)

@@ -123,7 +123,7 @@ namespace ThinksterASPCoreApi.Controllers
                 var planetToDelete = await _spaceRepository.GetPlanetAsync(id);
                 if (planetToDelete == null)
                 {
-                    return NotFound($"No planet exists with the id {id}");
+                    return NotFound($"No Planet exists with Id {id}");
                 }
 
                 _spaceRepository.DeletePlanet(planetToDelete);
@@ -139,7 +139,6 @@ namespace ThinksterASPCoreApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                     "Could not reach the database");
             }
-
             return BadRequest();
         }
     }
