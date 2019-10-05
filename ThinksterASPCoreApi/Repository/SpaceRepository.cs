@@ -34,7 +34,7 @@ namespace ThinksterASPCoreApi.Repository
 
         public void DeleteStar(Star star)
         {
-            throw new NotImplementedException();
+            _spaceDbContext.Remove(star);
         }
 
         public Task<List<Planet>> GetAllPlanetsAsync()
