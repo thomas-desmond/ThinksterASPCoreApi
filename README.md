@@ -5,8 +5,10 @@ This repository contains the project for the [Thinkster.io](Thinkster.io) course
 ## Overview
 ]By the end of the course you will be able implement your own API (Application Programming Interface) in C#. The course builds out a Space themed API. Students will follow along to make HTTP methods for all the CRUD operations on a set of planet data. Students also have the opporunity to complete a series of exercises related to star data. 
 
-The course is taught by Thomas Desmond 
+The course is taught by Thomas Desmond
+
 [@Twitter ThomasJDesmond](https://twitter.com/ThomasJDesmond)
+
 [TheTomBomb.com](thetombomb.com)
 
 
