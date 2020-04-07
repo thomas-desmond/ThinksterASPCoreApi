@@ -36,8 +36,7 @@ namespace ThinksterASPCoreApi
             var serviceProvider = services.BuildServiceProvider();
             _dbContext = serviceProvider.GetService<SpaceDatabaseContext>();
             _dbContext.Database.EnsureCreated();
-            //AddTestData(dbContext);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
